@@ -389,8 +389,34 @@
   </footer>
 
 <script src="//code.tidio.co/f1lhsmldb8sl1fzeb3zj1qjgzeujn1h1.js" async></script>
+
+  <script>
+  (function() {
+    function onTidioChatApiReady() {
+      // যখনই ইউজার চ্যাটবক্সটি বন্ধ করবে
+      window.tidioChatApi.on('close', function() {
+        // চ্যাট হিস্ট্রি এবং স্টেট ক্লিয়ার করবে
+        localStorage.removeItem('tidio_state');
+        sessionStorage.removeItem('tidio_state');
+        
+        // চ্যাটবক্সটি পুরোপুরি রিসেট করার জন্য পেজটি একবার রিফ্রেশ করবে (ঐচ্ছিক)
+        // window.location.reload(); 
+        
+        console.log("Chat closed and history cleared!");
+      });
+    }
+
+    if (window.tidioChatApi) {
+      onTidioChatApiReady();
+    } else {
+      document.addEventListener("tidioChat-ready", onTidioChatApiReady);
+    }
+  })();
+</script>
+
 </body>
 </html>
+
 
 
 
