@@ -393,14 +393,20 @@
   <script>
   (function() {
     function onTidioChatApiReady() {
-      // যখনই ইউজার চ্যাটবক্সটি বন্ধ করবে
+      // যখনই ইউজার চ্যাটবক্সটি বন্ধ (Minimize) করবে
       window.tidioChatApi.on('close', function() {
-        // চ্যাট হিস্ট্রি এবং স্টেট ক্লিয়ার করবে
+        
+        // ১. ব্রাউজার স্টোরেজ থেকে ডাটা মুছবে
         localStorage.removeItem('tidio_state');
         sessionStorage.removeItem('tidio_state');
+
+        // ২. টিডিও চ্যাটবক্সটি রিসেট করবে (যাতে মেসেজগুলো স্ক্রিন থেকে চলে যায়)
+        window.tidioChatApi.display(false); // চ্যাটবক্সটি হাইড করবে
         
-        // চ্যাটবক্সটি পুরোপুরি রিসেট করার জন্য পেজটি একবার রিফ্রেশ করবে (ঐচ্ছিক)
-        // window.location.reload(); 
+        // ৩. পেজটি রিফ্রেশ করবে যাতে মেমোরি পুরোপুরি ক্লিন হয়
+        setTimeout(function() {
+            window.location.reload();
+        }, 500); 
         
         console.log("Chat closed and history cleared!");
       });
@@ -416,6 +422,7 @@
 
 </body>
 </html>
+
 
 
 
