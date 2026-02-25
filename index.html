@@ -390,14 +390,24 @@
 <script src="//code.tidio.co/f1lhsmldb8sl1fzeb3zj1qjgzeujn1h1.js" async></script>
   <script>
   (function() {
-    // এটি ব্রাউজার থেকে আগের সেশন মুছে ফেলবে
+    function clearTidio() {
+      if (window.tidioChatApi) {
+        window.tidioChatApi.on('ready', function() {
+          localStorage.removeItem('tidio_state');
+          sessionStorage.removeItem('tidio_state');
+        });
+      }
+    }
+    // পেজ লোড হওয়ার সময় ডাটা ক্লিয়ার করবে
     localStorage.removeItem('tidio_state');
     sessionStorage.removeItem('tidio_state');
+    // টিডিও রেডি হওয়া পর্যন্ত অপেক্ষা করবে
+    setTimeout(clearTidio, 2000);
   })();
 </script>
-
 </body>
 </html>
+
 
 
 
